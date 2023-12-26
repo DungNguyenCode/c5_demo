@@ -30,7 +30,7 @@ namespace AppView.Controllers
         public async Task<IActionResult> Create(Product pro)
         {
             var item = await _httpClient.PostAsJsonAsync<Product>("https://localhost:7251/api/Product/Post", pro);
-            return View(item);
+            return RedirectToAction(nameof(Index));
         }
         [HttpGet]
         [Route("[action]/{ma}")]
@@ -45,6 +45,13 @@ namespace AppView.Controllers
         {
             var item = await _httpClient.PutAsJsonAsync<Product>($"https://localhost:7251/api/Product/Put/{pro.Ma}", pro);
             return RedirectToAction("Index");
+        }
+       
+        [Route("[action]/{ma}")]
+        public async Task<IActionResult> Delete(Product pro)
+        {
+            var item = await _httpClient.DeleteAsync($"https://localhost:7251/api/Product/Delete/{pro.Ma}");
+            return RedirectToAction(nameof(Index));
         }
         public IActionResult Privacy()
         {
